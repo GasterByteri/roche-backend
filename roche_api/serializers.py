@@ -39,9 +39,10 @@ class UserRegisterSerializer(RegisterSerializer):
             )
         user_mod.save()
 
-        user_profile = user_data_service.create_user_profile(dict(request.POST))
-        user_profile.user = user_mod
-        user_profile.save()
+        user_profile = user_data_service.create_user_profile(request.POST)
+        if user_profile:
+            user_profile.user = user_mod
+            user_profile.save()
 
         return user_mod
 
