@@ -30,4 +30,8 @@ python manage.py migrate
 ```shell script
 python manage.py runserver
 ```
-5. After the server is up and running the welcome endpoint is exposed at url `http://127.0.0.1:8000/api/welcome`.  
+5. After the server is up and running the welcome endpoint is exposed at url `http://127.0.0.1:8000/api/welcome`. 
+6. To pre-populate database with test data issue:
+```bash
+python manage.py db_seed --force True
+```

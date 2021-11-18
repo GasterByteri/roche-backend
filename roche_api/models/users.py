@@ -66,6 +66,7 @@ class Doctor(models.Model):
     city = models.CharField(max_length=100, blank=False, null=False)
     patients = models.ManyToManyField(
         Patient,
+        related_name="doctors",
         through='PatientDoctorMembership',
         through_fields=('doctor', 'patient'),
     )
@@ -74,11 +75,7 @@ class Doctor(models.Model):
 class PatientDoctorMembership(models.Model):
     class Meta:
         db_table = "patient_doctor"
+
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     mainDoctor = models.BooleanField(default=True)
-
-
-
-
-
