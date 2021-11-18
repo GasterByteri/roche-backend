@@ -32,7 +32,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+AUTH_USER_MODEL = 'roche_api.User'
 # Application definition
 
 INSTALLED_APPS = [
@@ -75,6 +75,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'roche_back.wsgi.application'
+
 
 
 # Database
