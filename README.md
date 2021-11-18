@@ -35,3 +35,20 @@ python manage.py runserver
 ```bash
 python manage.py db_seed --force True
 ```
+
+## Docker
+This app can also be build and run with docker containers. It uses docker and docker-compose which expect a .env file (which is the same as the roche_back/.env_example). To build and run simply do (if you don't want to build, just ommit the `--build`):
+```shell script
+ docker-compose --env-file .env up --build -d 
+ ```
+
+### Inital provisioning
+As described above the app requires you to initially run migrations, docker equivalents of those are bellow:
+```shell script
+docker exec -it roche-back_backend_1 python manage.py makemigrations
+docker exec -it roche-back_backend_1 python manage.py migrate
+```
+### Empty and repopulate DB with example data
+```shell script
+docker exec -it roche-back_backend_1 python manage.py db_seed --force True
+```
