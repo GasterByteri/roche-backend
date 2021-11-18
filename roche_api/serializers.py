@@ -24,7 +24,7 @@ class UserRegisterSerializer(RegisterSerializer):
     password = serializers.CharField(required=False)
 
     def save(self, request):
-        print(request.POST.get("username"), request.POST.get("password"))
+        # Add here for specific user types
         user_mod = user_models.User(
             role=request.POST.get("role"),
             username=request.POST.get("username"),
