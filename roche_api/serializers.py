@@ -3,6 +3,7 @@ import roche_api.models.users as user_models
 from rest_framework import serializers
 from rest_auth.registration.serializers import RegisterSerializer
 from django.contrib.auth.hashers import make_password
+from roche_api.services.data import users as user_data_service
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -37,5 +38,10 @@ class UserRegisterSerializer(RegisterSerializer):
             password=make_password(request.POST.get("password1")),
             )
         user_mod.save()
+
+        user_profile = user_data_service.create_user_profile(dict(request.POST))
+        user_profile.user = user_mod
+        user_profile.save()
+
         return user_mod
 
