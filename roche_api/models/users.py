@@ -16,6 +16,18 @@ class User(AbstractUser):
         (MALE, 'Male'),
         (UNSURE, 'Unsure')
     )
+
+    ADMIN = 'admin'
+    DOCTOR = 'doctor'
+    PATIENT = 'patient'
+
+    USER_TYPES = (
+        (ADMIN, 'admin'),
+        (DOCTOR, 'doctor'),
+        (PATIENT, 'patient'),
+    )
+
+    role = models.CharField(max_length=25, choices=USER_TYPES, default=PATIENT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     phone_number = models.CharField(max_length=30, blank=True, null=True)
@@ -52,6 +64,20 @@ class Doctor(models.Model):
     room_number = models.CharField(max_length=100, blank=True, null=True)
     hospital = models.CharField(max_length=100, blank=False, null=False)
     city = models.CharField(max_length=100, blank=False, null=False)
+    patients = models.ManyToManyField(
+        Patient,
+        through='PatientDoctorMembership',
+        through_fields=('doctor', 'patient'),
+    )
+
+
+class PatientDoctorMembership(models.Model):
+    class Meta:
+        db_table = "patient_doctor"
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    mainDoctor = models.BooleanField(default=True)
+
 
 
 
