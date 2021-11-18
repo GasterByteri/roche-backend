@@ -18,7 +18,7 @@ pip install -r requirements.txt
 ```shell script
 docker run -d --name db -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=roche_db -p 5432:5432 postgres:13
 ```
-After the docker container is up and running rename the .env_example to .env and change the database accordingly to the db created in the previous step.
+After the docker container is up and running ensure .env fits your needs change the database accordingly to the db created in the previous step.
 
 3. After the db is up and running, issue following commands to create migrations:
 ```shell script
@@ -39,7 +39,7 @@ python manage.py db_seed --force True
 ## Docker
 This app can also be build and run with docker containers. It uses docker and docker-compose which expect a .env file (which is the same as the roche_back/.env_example). To build and run simply do (if you don't want to build, just ommit the `--build`):
 ```shell script
- docker-compose --env-file .env up --build -d 
+ docker-compose --env-file roche_back/.env up --build -d 
  ```
 
 ### Inital provisioning
