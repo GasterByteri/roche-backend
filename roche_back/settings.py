@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'django.contrib.sites',
     'corsheaders',
+    'rest_framework_swagger',
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -79,7 +80,8 @@ ROOT_URLCONF = 'roche_back.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR + '/templates']
+        ,
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -91,6 +93,8 @@ TEMPLATES = [
         },
     },
 ]
+
+
 
 WSGI_APPLICATION = 'roche_back.wsgi.application'
 

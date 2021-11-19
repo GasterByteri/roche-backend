@@ -15,10 +15,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import TemplateView
+from rest_framework.schemas import get_schema_view
 
 urlpatterns = [
     path('', include('rest_auth.urls')),
     path('admin/', admin.site.urls),
     path('api/', include('roche_api.urls')),
     path('api/registration/', include('rest_auth.registration.urls')),
+    path('api/docs/', TemplateView.as_view(
+        template_name='swagger-ui.html',
+        extra_context={'schema_url': 'openapi-schema'},
+    ), name='swagger-ui'),
+
+    path('api/openapi/', get_schema_view(
+        title="Roche-hackaton",
+        description="API schema",
+        authentication_classes=[],
+        permission_classes=[],
+    ), name='openapi-schema'),
 ]
