@@ -1,38 +1,19 @@
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
+from roche_api import constants as api_constants
 
 
 class User(AbstractUser):
     class Meta:
         db_table = "user"
 
-    FEMALE = 'F'
-    MALE = 'M'
-    UNSURE = 'U'
-
-    OPTIONS_SEX = (
-        (FEMALE, 'Female'),
-        (MALE, 'Male'),
-        (UNSURE, 'Unsure')
-    )
-
-    ADMIN = 'admin'
-    DOCTOR = 'doctor'
-    PATIENT = 'patient'
-
-    USER_TYPES = (
-        (ADMIN, 'admin'),
-        (DOCTOR, 'doctor'),
-        (PATIENT, 'patient'),
-    )
-
-    role = models.CharField(max_length=25, choices=USER_TYPES, default=PATIENT)
+    role = models.CharField(max_length=25, choices=api_constants.USER_TYPES, default=api_constants.PATIENT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     phone_number = models.CharField(max_length=30, blank=True, null=True)
     is_admin = models.BooleanField(default=False)
-    sex = models.CharField(max_length=1, choices=OPTIONS_SEX, default='F', null=False)
+    sex = models.CharField(max_length=1, choices=api_constants.OPTIONS_SEX, default='F', null=False)
     birth_date = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
 
 
