@@ -14,3 +14,33 @@ class PatientList(APIView):
         patients = user_models.Patient.objects.all()
         serializer = PatientSerializer(patients, many=True)
         return Response(serializer.data)
+
+
+class PatientDetail(APIView):
+    # Just for easier testing
+    authentication_classes = []
+    permission_classes = []
+
+    def get_object(self, pk):
+        try:
+            return user_models.Patient.objects.get(pk=pk)
+        except user_models.Patient.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        patient = self.get_object(pk)
+        serializer = PatientSerializer(patient)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        patient = self.get_object(pk)
+        serializer = PatientSerializer(patient, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        patient = self.get_object(pk)
+        patient.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
