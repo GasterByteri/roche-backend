@@ -37,7 +37,19 @@ python manage.py db_seed --force True
 ```
 
 ## Docker
-This app can also be build and run with docker containers. It uses docker and docker-compose which expect a .env file (which is the same as the roche_back/.env_example). To build and run simply do (if you don't want to build, just ommit the `--build`):
+This app can also be build and run with docker containers. It uses docker and docker-compose which expect a .env file (which is the same as the roche_back/.env_example). 
+
+First, Docker must be installed:
+
+* Windows: https://docs.docker.com/desktop/windows/install/
+* Ubuntu: https://docs.docker.com/engine/install/ubuntu/
+* Mac: https://docs.docker.com/desktop/mac/install/
+
+After installing Docker Desktop, on Windows and Mac there is no need to install _docker-compose_, for Linux follow instructions on the https://docs.docker.com/compose/install/.
+
+
+
+To build and run simply do (if you don't want to build, just ommit the `--build`):
 ```shell script
  docker-compose --env-file roche_back/.env up --build -d 
  ```
