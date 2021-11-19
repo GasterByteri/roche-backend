@@ -49,17 +49,17 @@ class UserRegisterSerializer(RegisterSerializer):
 
 # Patient serializer
 class PatientSerializer(serializers.ModelSerializer):
-    user = UserSerializer(many=False, required=True)
+    user = UserSerializer(many=False, required=False)
     class Meta:
         model = user_models.Patient
-        fields = ['id','municipality', 'medical_record_number', 'diagnosis', 'user']
+        fields = ['id', 'municipality', 'medical_record_number', 'diagnosis', 'user']
 
 
 # Doctor serializer
 class DoctorSerializer(serializers.ModelSerializer):
-    user = UserSerializer(many=False, required=True)
+    user = UserSerializer(many=False, required=False)
     patients = PatientSerializer(many=True, required=False)
 
     class Meta:
         model = user_models.Doctor
-        fields = ['id','employee_number', 'department', 'title', 'room_number', 'hospital', 'city', 'user', 'patients']
+        fields = ['id', 'employee_number', 'department', 'title', 'room_number', 'hospital', 'city', 'user', 'patients']
