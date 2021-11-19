@@ -46,3 +46,18 @@ class UserRegisterSerializer(RegisterSerializer):
 
         return user_mod
 
+
+# Patient serializer
+class PatientSerializer(serializers.ModelSerializer):
+    user = UserSerializer(many=False, required=True)
+    class Meta:
+        model = user_models.Patient
+        fields = ['id','municipality', 'medical_record_number', 'diagnosis', 'user']
+
+
+# Doctor serializer
+class DoctorSerializer(serializers.ModelSerializer):
+    user = UserSerializer(many=False, required=True)
+    class Meta:
+        model = user_models.Patient
+        fields = ['id','employee_number', 'department', 'title', 'room_number', 'hospital', 'city', 'user']
