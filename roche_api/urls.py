@@ -3,6 +3,7 @@ from . import views
 from roche_api.views import users as user_views
 from roche_api.views import patients as patient_views
 from roche_api.views import doctors as doctor_views
+from roche_api.views import journals as journal_views
 from roche_api.views import chat as chat_views
 from roche_api.views import authentication as authentication_views
 from rest_framework.urlpatterns import format_suffix_patterns
@@ -19,6 +20,7 @@ urlpatterns = [
   path('chat/', chat_views.chat_public_rooms),
   path('chat/private/', chat_views.chat_private_rooms),
   path('chat/<int:pk>', chat_views.chat_user),
+  path('journals/', journal_views.JournalList.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

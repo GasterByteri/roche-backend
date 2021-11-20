@@ -1,4 +1,5 @@
 import roche_api.models.users as user_models
+import roche_api.models.journal as journal_models
 
 from rest_framework import serializers
 from rest_auth.registration.serializers import RegisterSerializer
@@ -69,3 +70,44 @@ class DoctorSerializer(serializers.ModelSerializer):
     class Meta:
         model = user_models.Doctor
         fields = ['id', 'employee_number', 'department', 'title', 'room_number', 'hospital', 'city', 'user', 'patients']
+
+
+class JournalDetailSerializer(serializers.ModelSerializer):
+    created_by_id = serializers.IntegerField(required=True)
+    patient_id = serializers.IntegerField(required=True)
+
+    class Meta:
+        model = journal_models.Journal
+        fields = ['id', 'text_note', 'image_url', 'created_at', 'updated_at', 'patient_id', 'created_by_id']
+
+    def create(self, validated_data):
+        created_by_id = validated_data.get("created_by_id")
+        patient_id = validated_data.pop('patient_id')
+        created_by = user_models.User.objects.get(pk=created_by_id)
+        patient = user_models.User.objects.get(pk=patient_id)
+        journal = journal_models.Journal.objects.create(**validated_data, created_by=created_by, patient=patient)
+        return journal
+
+    def update(self, instance, validated_data):
+        created_by_id = validated_data.get("created_by_id")
+        patient_id = validated_data.pop('patient_id')
+        created_by = user_models.User.objects.get_or_create(pk=created_by_id)
+        patient = user_models.User.objects.get_or_create(pk=patient_id)
+
+        instance.created_by = created_by
+        instance.patient = patient
+
+        instance.text_note = validated_data.get("text_note", instance.text_note)
+        instance.image_url = validated_data.get("image_url", instance.image_url)
+
+        instance.save()
+
+        return instance
+
+class JournalSerializer(serializers.ModelSerializer):
+    created_by = UserSerializer(many=False, required=True)
+    patient = UserSerializer(many=False, required=True)
+
+    class Meta:
+        model = journal_models.Journal
+        fields = ['id', 'text_note', 'image_url', 'created_at', 'updated_at', 'patient', 'created_by']
