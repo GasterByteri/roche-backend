@@ -16,7 +16,8 @@ urlpatterns = [
   path('patients/<int:pk>/', patient_views.PatientDetail.as_view()),
   path('doctors/', doctor_views.DoctorList.as_view()),
   path('doctors/<int:pk>/', doctor_views.DoctorDetail.as_view()),
-  path('chat/', chat_views.get_chat_rooms),
+  path('chat/', chat_views.chat_public_rooms),
+  path('chat/private/', chat_views.chat_private_rooms),
   path('chat/<int:pk>', chat_views.chat_user),
 ]
 

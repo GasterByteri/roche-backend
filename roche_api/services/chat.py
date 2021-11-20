@@ -25,3 +25,25 @@ class ChatClient:
 
     def get_public_rooms(self):
         return self.api_client.get_public_rooms()
+
+    def get_private_rooms(self):
+        return self.api_client.get_private_rooms()
+
+    # Add members
+    def create_public_room(self, room_name, members=[]):
+        chat_data = {
+            "name":room_name,
+        }
+        api_endpoint = os.path.join(self.api_endpoint, 'channels.create')
+        headers = {"X-Auth-Token": env('ROCKET_CHAT_AUTH_TOKEN'), "X-User-Id": env('ROCKET_CHAT_AUTH_ID')}
+        response = requests.post(api_endpoint, data=chat_data, headers=headers)
+        return response.json()
+
+    def create_private_room(self, room_name, members=[]):
+        chat_data = {
+            "name": room_name,
+        }
+        api_endpoint = os.path.join(self.api_endpoint, 'groups.create')
+        headers = {"X-Auth-Token": env('ROCKET_CHAT_AUTH_TOKEN'), "X-User-Id": env('ROCKET_CHAT_AUTH_ID')}
+        response = requests.post(api_endpoint, data=chat_data, headers=headers)
+        return response.json()

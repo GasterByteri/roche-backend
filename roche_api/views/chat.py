@@ -7,13 +7,30 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth import logout
 from roche_api.services import chat as chat_service
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 @permission_classes([AllowAny])
-def get_chat_rooms(request):
+def chat_public_rooms(request):
+    chat_client = chat_service.ChatClient()
     if request.method == 'GET':
-        chat_client = chat_service.ChatClient()
         public_rooms = chat_client.get_public_rooms()
         return Response(public_rooms, status=status.HTTP_200_OK)
+    elif request.method == "POST":
+        room_name = request.data.get("room_name")
+        new_room = chat_client.create_public_room(room_name)
+        return Response(new_room, status=status.HTTP_200_OK)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET', 'POST'])
+@permission_classes([AllowAny])
+def chat_private_rooms(request):
+    chat_client = chat_service.ChatClient()
+    if request.method == 'GET':
+        public_rooms = chat_client.get_private_rooms()
+        return Response(public_rooms, status=status.HTTP_200_OK)
+    elif request.method == "POST":
+        room_name = request.data.get("room_name")
+        new_room = chat_client.create_private_room(room_name)
+        return Response(new_room, status=status.HTTP_200_OK)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
