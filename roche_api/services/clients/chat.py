@@ -15,11 +15,11 @@ class ChatClient:
     api_endpoint = urljoin(api_host, "api/v1/")
     api_client = RocketChatAPI(settings={'username': env('ROCKET_CHAT_USERNAME'),'password': env('ROCKET_CHAT_PASS'),'domain': api_host})
 
-    def create_user(self, user):
+    def create_user(self, user, password):
         chat_user_data = {
             'email' : user.email,
             'name': user.first_name,
-            'pass': "randomPass",
+            'pass': password,
             'username': user.username,
         }
         api_endpoint = urljoin(self.api_endpoint, 'users.register')

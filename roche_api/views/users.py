@@ -31,7 +31,7 @@ class UserList(generics.ListCreateAPIView):
             user.set_password(request.data.get('password'))
             user.save()
 
-            chat_service.create_user_rocket_chat(user)
+            chat_service.create_user_rocket_chat(user, request.data.get("password"))
 
             token,created = Token.objects.get_or_create(user=user)
             response_data = {

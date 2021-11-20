@@ -12,10 +12,10 @@ from roche_api.services.clients import chat as chat_client
 @permission_classes([AllowAny])
 def user_login(request):
     if request.method == 'POST':
-        username = request.data.get("email")
+        email = request.data.get("email")
         password = request.data.get("password")
         try:
-            user = user_models.User.objects.get(username=username)
+            user = user_models.User.objects.get(email=email)
         except user_models.User.DoesNotExist:
             return Response({"message":"User with entered username does not exist!"}, status=status.HTTP_400_BAD_REQUEST)
         token = Token.objects.get(user=user).key
@@ -25,7 +25,7 @@ def user_login(request):
             client = chat_client.ChatClient()
 
             chat_auth_token = client.login_user({
-                "user" : username,
+                "user" : email,
                 "password": password,
             })
 
