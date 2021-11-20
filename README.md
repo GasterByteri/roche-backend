@@ -57,10 +57,10 @@ To build and run simply do (if you don't want to build, just ommit the `--build`
 ### Inital provisioning
 As described above the app requires you to initially run migrations, docker equivalents of those are bellow:
 ```shell script
-docker exec -it roche-back_backend_1 python manage.py makemigrations
-docker exec -it roche-back_backend_1 python manage.py migrate
+docker exec -it roche-backend_backend_1 python manage.py makemigrations
+docker exec -it roche-backend_backend_1 python manage.py migrate
 ```
 ### Empty and repopulate DB with example data
 ```shell script
-docker exec -it roche-back_backend_1 python manage.py db_seed --force True
+docker exec -it roche-backend_backend_1 python manage.py db_seed --force True
 ```
