@@ -7,6 +7,7 @@ from rest_framework import status, generics
 from rest_framework.authtoken.models import Token
 from roche_api.services.data import users as users_data_service
 from roche_api.services import chat as chat_service
+from roche_api import constants
 
 
 class PatientList(generics.ListCreateAPIView):
@@ -20,7 +21,7 @@ class PatientList(generics.ListCreateAPIView):
         # try:
 
         user_data = request.data.pop("user")
-        user = user_models.User.objects.create(**user_data)
+        user = user_models.User.objects.create(**user_data,role=constants.PATIENT)
         user.save()
 
         patient = user_models.Patient.objects.create(user=user, **request.data)

@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status,generics
 from rest_framework.authtoken.models import Token
 from roche_api.services import chat as chat_service
+from roche_api import constants
 
 
 class DoctorList(generics.ListCreateAPIView):
@@ -19,8 +20,10 @@ class DoctorList(generics.ListCreateAPIView):
         try:
 
             user_data = request.data.pop("user")
-            user = user_models.User.objects.create(**user_data)
+            user = user_models.User.objects.create(**user_data, role=constants.DOCTOR)
             user.save()
+
+            request.data.pop("patients")
 
             doctor = user_models.Doctor.objects.create(user=user, **request.data)
             doctor.save()
@@ -38,6 +41,7 @@ class DoctorList(generics.ListCreateAPIView):
             return Response({
                 "message": e,
             }, status=status.HTTP_400_BAD_REQUEST)
+
 
 class DoctorDetail(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = []

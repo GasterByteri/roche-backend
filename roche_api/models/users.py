@@ -27,8 +27,13 @@ class Patient(models.Model):
     )
     # This can be connected with the google maps to search for a choice of cities -- can be done on the frontend
     municipality = models.CharField(max_length=100, blank=True, null=True)
-    medical_record_number = models.CharField(max_length=100, null=False, blank=False)
-    diagnosis = models.TextField(null=False, blank=False)
+    medical_record_number = models.CharField(max_length=100, null=True, blank=True)
+    diagnosis = models.TextField(null=True, blank=True)
+
+    def delete(self, *args, **kwargs):
+        if self.user:
+            self.user.delete()
+        super().delete(*args, **kwargs)
 
 
 class Doctor(models.Model):
@@ -39,18 +44,23 @@ class Doctor(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
-    employee_number = models.CharField(max_length=100, blank=False, null=False)
-    department = models.CharField(max_length=100, blank=False, null=False)
-    title = models.CharField(max_length=100, blank=False, null=False)
+    employee_number = models.CharField(max_length=100, blank=True, null=True)
+    department = models.CharField(max_length=100, blank=True, null=True)
+    title = models.CharField(max_length=100, blank=True, null=True)
     room_number = models.CharField(max_length=100, blank=True, null=True)
-    hospital = models.CharField(max_length=100, blank=False, null=False)
-    city = models.CharField(max_length=100, blank=False, null=False)
+    hospital = models.CharField(max_length=100, blank=True, null=True)
+    city = models.CharField(max_length=100, blank=True, null=True)
     patients = models.ManyToManyField(
         Patient,
         related_name="doctors",
         through='PatientDoctorMembership',
         through_fields=('doctor', 'patient'),
     )
+
+    def delete(self, *args, **kwargs):
+        if self.user:
+            self.user.delete()
+        super().delete(*args, **kwargs)
 
 
 class PatientDoctorMembership(models.Model):

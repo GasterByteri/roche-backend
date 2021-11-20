@@ -23,7 +23,7 @@ class Journal(models.Model):
         related_name="patient_owner",
         # primary_key=True
     )
-    text_note = models.TextField(null=False, blank=False)
+    text_note = models.TextField(null=True, blank=True)
     image = models.ImageField(upload_to=nameFile, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

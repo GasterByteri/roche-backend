@@ -11,7 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = user_models.User
-        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'sex', 'role', 'is_admin', 'birth_date', 'phone_number']
+        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'sex', 'role', 'birth_date', 'phone_number']
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):
@@ -61,6 +61,24 @@ class PatientSerializer(serializers.ModelSerializer):
         model = user_models.Patient
         fields = ['id', 'municipality', 'medical_record_number', 'diagnosis', 'user']
 
+    def update(self, instance, validated_data):
+        instance.user.username = validated_data.get("username", instance.user.username)
+        instance.user.email = validated_data.get("email", instance.user.email)
+        instance.user.first_name = validated_data.get("first_name", instance.user.first_name)
+        instance.user.last_name = validated_data.get("last_name", instance.user.last_name)
+        instance.user.sex = validated_data.get("sex", instance.user.sex)
+        instance.user.birth_date = validated_data.get("birth_date", instance.user.birth_date)
+        instance.user.phone_number = validated_data.get("phone_number", instance.user.phone_number)
+
+        instance.municipality = validated_data.get("municipality", instance.municipality)
+        instance.medical_record_number = validated_data.get("medical_record_number", instance.medical_record_number)
+        instance.diagnosis = validated_data.get("diagnosis", instance.diagnosis)
+
+        instance.save()
+
+        return instance
+
+
 
 # Doctor serializer
 class DoctorSerializer(serializers.ModelSerializer):
@@ -71,6 +89,25 @@ class DoctorSerializer(serializers.ModelSerializer):
         model = user_models.Doctor
         fields = ['id', 'employee_number', 'department', 'title', 'room_number', 'hospital', 'city', 'user', 'patients']
 
+    def update(self, instance, validated_data):
+        instance.user.username = validated_data.get("username", instance.user.username)
+        instance.user.email = validated_data.get("email", instance.user.email)
+        instance.user.first_name = validated_data.get("first_name", instance.user.first_name)
+        instance.user.last_name = validated_data.get("last_name", instance.user.last_name)
+        instance.user.sex = validated_data.get("sex", instance.user.sex)
+        instance.user.birth_date = validated_data.get("birth_date", instance.user.birth_date)
+        instance.user.phone_number = validated_data.get("phone_number", instance.user.phone_number)
+
+        instance.employee_number = validated_data.get("employee_number", instance.employee_number)
+        instance.department = validated_data.get("department", instance.department)
+        instance.title = validated_data.get("title", instance.title)
+        instance.room_number = validated_data.get("room_number", instance.room_number)
+        instance.hospital = validated_data.get("hospital", instance.hospital)
+        instance.city = validated_data.get("city", instance.city)
+
+        instance.save()
+
+        return instance
 
 class JournalDetailSerializer(serializers.ModelSerializer):
     created_by_id = serializers.IntegerField(required=True)
