@@ -8,6 +8,7 @@ from rest_framework.authtoken.models import Token
 from roche_api.services.data import users as users_data_service
 from roche_api.services import chat as chat_service
 
+
 class PatientList(generics.ListCreateAPIView):
     authentication_classes = []
     permission_classes = []
@@ -44,6 +45,9 @@ class PatientList(generics.ListCreateAPIView):
 
 
 class PatientDetail(generics.RetrieveUpdateDestroyAPIView):
+    authentication_classes = []
+    permission_classes = []
+
     queryset = user_models.Patient.objects.all()
     serializer_class = PatientSerializer
 

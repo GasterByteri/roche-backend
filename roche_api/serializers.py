@@ -78,7 +78,7 @@ class JournalDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = journal_models.Journal
-        fields = ['id', 'text_note', 'image_url', 'created_at', 'updated_at', 'patient_id', 'created_by_id']
+        fields = ['id', 'text_note', 'image', 'created_at', 'updated_at', 'patient_id', 'created_by_id']
 
     def create(self, validated_data):
         created_by_id = validated_data.get("created_by_id")
@@ -104,10 +104,18 @@ class JournalDetailSerializer(serializers.ModelSerializer):
 
         return instance
 
+
 class JournalSerializer(serializers.ModelSerializer):
     created_by = UserSerializer(many=False, required=True)
     patient = UserSerializer(many=False, required=True)
 
     class Meta:
         model = journal_models.Journal
-        fields = ['id', 'text_note', 'image_url', 'created_at', 'updated_at', 'patient', 'created_by']
+        fields = ['id', 'text_note', 'image', 'created_at', 'updated_at', 'patient', 'created_by']
+
+
+class TagSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = journal_models.Tags
+        fields = ['id', 'name', 'color', 'icon']

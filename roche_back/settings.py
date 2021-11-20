@@ -27,9 +27,8 @@ SECRET_KEY = 'lpzm2=9a%9og70^)rmwau$t-vi-mvkm7=iw4-)-=dx1gh%3734'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = env("ALLOWED_HOSTS")
-# ALLOWED_HOSTS = ["localhost"]
-
+# ALLOWED_HOSTS = env("ALLOWED_HOSTS")
+ALLOWED_HOSTS = ['23.88.57.2', 'localhost', '127.0.0.1', '23.88.57.2', 'hakaton.buzzwrd.me']
 AUTH_USER_MODEL = 'roche_api.User'
 # Application definition
 
@@ -49,11 +48,14 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'corsheaders',
     'rest_framework_swagger',
+     'allauth.socialaccount',
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 SITE_ID = 1
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOWED_ORIGINS = ["http://localhost:4200",]
+CORS_ALLOW_ALL_ORIGINS = True
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -75,6 +77,9 @@ REST_AUTH_SERIALIZERS = {
 
 ROOT_URLCONF = 'roche_back.urls'
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/' # 'http://myhost:port/media/'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -87,6 +92,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },

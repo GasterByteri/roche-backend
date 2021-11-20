@@ -21,6 +21,9 @@ urlpatterns = [
   path('chat/private/', chat_views.chat_private_rooms),
   path('chat/<int:pk>', chat_views.chat_user),
   path('journals/', journal_views.JournalList.as_view()),
+  path('journals/<int:pk>', journal_views.JournalDetail.as_view()),
+  path('tags/', journal_views.TagList.as_view()),
+  path('tags/<int:pk>', journal_views.TagDetail.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

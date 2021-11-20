@@ -40,6 +40,9 @@ class DoctorList(generics.ListCreateAPIView):
             }, status=status.HTTP_400_BAD_REQUEST)
 
 class DoctorDetail(generics.RetrieveUpdateDestroyAPIView):
+    authentication_classes = []
+    permission_classes = []
+
     queryset = user_models.Doctor.objects.all()
     serializer_class = DoctorSerializer
 
