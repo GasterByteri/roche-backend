@@ -25,7 +25,7 @@ class DoctorList(generics.ListCreateAPIView):
             doctor = user_models.Doctor.objects.create(user=user, **request.data)
             doctor.save()
 
-            chat_service.create_user_rocket_chat(user, request.data.get("password"))
+            chat_service.create_user_rocket_chat(user, user_data.get("password", ""))
 
             token, created = Token.objects.get_or_create(user=user)
             response_data = {

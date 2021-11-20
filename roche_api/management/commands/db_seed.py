@@ -29,11 +29,12 @@ class Command(BaseCommand):
             phone_number="067832032",
             sex="F",
             birth_date="1995-10-25",
-            first_name="F1",
-            last_name="L1",
-            username="F1L1",
-            email="f1l1@gmail.com"
+            first_name="Petra",
+            last_name="Petrovic",
+            username="petra",
+            email="petra@gmail.com"
         )
+        user_1.set_password("petra12345")
         user_1.save()
 
         user_2 = user_models.User(
@@ -89,11 +90,12 @@ class Command(BaseCommand):
             phone_number="067832032",
             sex="M",
             birth_date="1965-10-25",
-            first_name="D1",
-            last_name="L1",
-            username="D1L1",
-            email="d1l1@gmail.com"
+            first_name="Petar",
+            last_name="Petrovic",
+            username="petar",
+            email="petar@gmail.com"
         )
+        user_4.set_password("petar12345")
         user_4.save()
 
         user_5 = user_models.User(
@@ -144,3 +146,16 @@ class Command(BaseCommand):
             mainDoctor=True,
         )
         patient_doctor_2.save()
+
+        admin_1 = user_models.User(
+            role="admin",
+            phone_number="0678324332",
+            sex="F",
+            birth_date="1985-11-25",
+            first_name="Admin",
+            last_name="Admin",
+            username="admin",
+            email="admin@gmail.com"
+        )
+        admin_1.set_password("admin12345")
+        admin_1.save()
