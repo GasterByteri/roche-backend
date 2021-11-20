@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status,generics
 from rest_framework.authtoken.models import Token
+from roche_api.services import chat as chat_service
 
 
 class DoctorList(generics.ListCreateAPIView):
@@ -23,6 +24,8 @@ class DoctorList(generics.ListCreateAPIView):
 
             doctor = user_models.Doctor.objects.create(user=user, **request.data)
             doctor.save()
+
+            chat_service.create_user_rocket_chat(user)
 
             token, created = Token.objects.get_or_create(user=user)
             response_data = {

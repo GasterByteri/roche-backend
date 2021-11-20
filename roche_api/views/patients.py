@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status, generics
 from rest_framework.authtoken.models import Token
 from roche_api.services.data import users as users_data_service
-
+from roche_api.services import chat as chat_service
 
 class PatientList(generics.ListCreateAPIView):
     authentication_classes = []
@@ -24,6 +24,11 @@ class PatientList(generics.ListCreateAPIView):
 
         patient = user_models.Patient.objects.create(user=user, **request.data)
         patient.save()
+
+        chat_service.create_user_rocket_chat(user)
+
+        # Create user in chatApp -- temporary here
+
 
         token, created = Token.objects.get_or_create(user=user)
         response_data = {

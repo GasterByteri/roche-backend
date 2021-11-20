@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from roche_api.models import users as user_models
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import logout
-from roche_api.services import chat as chat_service
+from roche_api.services.clients import chat as chat_service
 
 @api_view(['GET', 'POST'])
 @permission_classes([AllowAny])
