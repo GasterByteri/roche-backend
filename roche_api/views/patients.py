@@ -25,7 +25,7 @@ class PatientList(generics.ListCreateAPIView):
         patient = user_models.Patient.objects.create(user=user, **request.data)
         patient.save()
 
-        chat_service.create_user_rocket_chat(user)
+        chat_service.create_user_rocket_chat(user, request.data.get("password"))
 
         # Create user in chatApp -- temporary here
 
