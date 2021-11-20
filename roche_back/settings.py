@@ -30,7 +30,7 @@ SECRET_KEY = 'lpzm2=9a%9og70^)rmwau$t-vi-mvkm7=iw4-)-=dx1gh%3734'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['23.88.57.2']
 
 AUTH_USER_MODEL = 'roche_api.User'
 # Application definition
