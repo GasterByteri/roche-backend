@@ -28,6 +28,7 @@ SECRET_KEY = 'lpzm2=9a%9og70^)rmwau$t-vi-mvkm7=iw4-)-=dx1gh%3734'
 DEBUG = True
 
 ALLOWED_HOSTS = env("ALLOWED_HOSTS")
+# ALLOWED_HOSTS = ["localhost"]
 
 AUTH_USER_MODEL = 'roche_api.User'
 # Application definition

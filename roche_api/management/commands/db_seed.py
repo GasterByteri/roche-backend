@@ -2,6 +2,8 @@ import random
 
 from django.core.management.base import BaseCommand
 from roche_api.models import users as user_models
+from rest_framework.authtoken.models import Token
+
 
 
 class Command(BaseCommand):
@@ -36,6 +38,7 @@ class Command(BaseCommand):
         )
         user_1.set_password("petra12345")
         user_1.save()
+        token, created = Token.objects.get_or_create(user=user_1)
 
         user_2 = user_models.User(
             role="patient",
@@ -48,6 +51,8 @@ class Command(BaseCommand):
             email="f2l2@gmail.com"
         )
         user_2.save()
+        token, created = Token.objects.get_or_create(user=user_2)
+
 
         user_3 = user_models.User(
             role="patient",
@@ -60,6 +65,8 @@ class Command(BaseCommand):
             email="f3l3@gmail.com"
         )
         user_3.save()
+        token, created = Token.objects.get_or_create(user=user_3)
+
 
         patient_1 = user_models.Patient(
             municipality="Podgorica",
@@ -97,6 +104,8 @@ class Command(BaseCommand):
         )
         user_4.set_password("petar12345")
         user_4.save()
+        token, created = Token.objects.get_or_create(user=user_4)
+
 
         user_5 = user_models.User(
             role="doctor",
@@ -109,6 +118,8 @@ class Command(BaseCommand):
             email="d2l2@gmail.com"
         )
         user_5.save()
+        token, created = Token.objects.get_or_create(user=user_5)
+
 
         doctor_1 = user_models.Doctor(
             employee_number="4367643",
@@ -159,3 +170,5 @@ class Command(BaseCommand):
         )
         admin_1.set_password("admin12345")
         admin_1.save()
+        token, created = Token.objects.get_or_create(user=admin_1)
+
