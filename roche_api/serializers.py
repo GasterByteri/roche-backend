@@ -156,3 +156,31 @@ class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = journal_models.Tags
         fields = ['id', 'name', 'color', 'icon']
+
+class DoctorMembershipDetailSerializer(serializers.ModelSerializer):
+    doctor_id = serializers.IntegerField(required=False)
+    patient_id = serializers.IntegerField(required=False)
+    main_doctor = serializers.BooleanField(required=False)
+
+    class Meta:
+        model = user_models.PatientDoctorMembership
+        fields = ['id', 'doctor_id', 'patient_id', 'mainDoctor']
+
+    def create(self, validated_data):
+        doctor_id = validated_data.pop("doctor_id")
+        patient_id = validated_data.pop('patient_id')
+        doctor = user_models.Doctor.objects.get(pk=doctor_id)
+        patient = user_models.Patient.objects.get(pk=patient_id)
+        membership = user_models.PatientDoctorMembership(**validated_data, doctor=doctor, patient=patient)
+        return membership
+
+
+class DoctorMembershipSerializer(serializers.ModelSerializer):
+    doctor = DoctorSerializer(many=False, required=False)
+    patient = PatientSerializer(many=False, required=False)
+
+    class Meta:
+        model = user_models.PatientDoctorMembership
+        fields = ['id', 'doctor', 'patient', 'mainDoctor']
+
+

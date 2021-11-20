@@ -90,3 +90,4 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
 #         user = self.get_object(pk)
 #         user.delete()
 #         return Response(status=status.HTTP_204_NO_CONTENT)
+

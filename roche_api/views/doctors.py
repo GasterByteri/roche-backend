@@ -20,10 +20,11 @@ class DoctorList(generics.ListCreateAPIView):
         try:
 
             user_data = request.data.pop("user")
-            user = user_models.User.objects.create(**user_data, role=constants.DOCTOR)
+            user = user_models.User(**user_data, role=constants.DOCTOR)
             user.save()
 
-            request.data.pop("patients")
+            if request.data.get("patients"):
+                request.data.pop("patients")
 
             doctor = user_models.Doctor.objects.create(user=user, **request.data)
             doctor.save()

@@ -4,6 +4,7 @@ import os
 import environ
 from urllib.parse import urljoin
 from rest_framework import status
+import json
 
 
 # Reading environment variables defined in .env
@@ -18,7 +19,7 @@ class ChatClient:
     def create_user(self, user, password):
         chat_user_data = {
             'email' : user.email,
-            'name': user.first_name,
+            'name': user.first_name + " " + user.last_name,
             'pass': password,
             'username': user.username,
         }
@@ -45,10 +46,11 @@ class ChatClient:
     def create_private_room(self, room_name, members=[]):
         chat_data = {
             "name": room_name,
+            "members": members,
         }
         endpoint = urljoin(self.api_endpoint, 'groups.create')
         headers = {"X-Auth-Token": env('ROCKET_CHAT_AUTH_TOKEN'), "X-User-Id": env('ROCKET_CHAT_AUTH_ID')}
-        response = requests.post(endpoint, data=chat_data, headers=headers)
+        response = requests.post(endpoint, json=chat_data, headers=headers)
         return response.json()
 
     def login_user(self, user_login_data):
