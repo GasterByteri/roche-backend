@@ -160,7 +160,7 @@ class TagSerializer(serializers.ModelSerializer):
 class DoctorMembershipDetailSerializer(serializers.ModelSerializer):
     doctor_id = serializers.IntegerField(required=False)
     patient_id = serializers.IntegerField(required=False)
-    main_doctor = serializers.BooleanField(required=False)
+    mainDoctor = serializers.BooleanField(required=False)
 
     class Meta:
         model = user_models.PatientDoctorMembership
