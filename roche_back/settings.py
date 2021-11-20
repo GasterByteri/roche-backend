@@ -71,9 +71,9 @@ MIDDLEWARE = [
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'roche_api.serializers.UserSerializer',
 }
-REST_AUTH_REGISTER_SERIALIZERS = {
-    'REGISTER_SERIALIZER': "roche_api.serializers.UserRegisterSerializer",
-}
+# REST_AUTH_REGISTER_SERIALIZERS = {
+#     'REGISTER_SERIALIZER': "roche_api.serializers.UserRegisterSerializer",
+# }
 
 ROOT_URLCONF = 'roche_back.urls'
 
