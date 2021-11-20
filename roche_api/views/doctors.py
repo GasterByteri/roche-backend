@@ -4,6 +4,7 @@ from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status,generics
+from rest_framework.authtoken.models import Token
 
 
 class DoctorList(generics.ListCreateAPIView):
@@ -13,6 +14,27 @@ class DoctorList(generics.ListCreateAPIView):
     queryset = user_models.Doctor.objects.all()
     serializer_class = DoctorSerializer
 
+    def post(self, request, *args, **kwargs):
+        try:
+
+            user_data = request.data.pop("user")
+            user = user_models.User.objects.create(**user_data)
+            user.save()
+
+            doctor = user_models.Doctor.objects.create(user=user, **request.data)
+            doctor.save()
+
+            token, created = Token.objects.get_or_create(user=user)
+            response_data = {
+                "id": user.id,
+                "key": token.key
+            }
+
+            return Response(response_data, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response({
+                "message": e,
+            }, status=status.HTTP_400_BAD_REQUEST)
 
 class DoctorDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = user_models.Doctor.objects.all()

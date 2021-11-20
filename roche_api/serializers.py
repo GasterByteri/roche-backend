@@ -10,14 +10,14 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = user_models.User
-        fields = ['id', 'email', 'first_name', 'last_name', 'sex', 'role', 'is_admin', 'birth_date', 'phone_number']
+        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'sex', 'role', 'is_admin', 'birth_date', 'phone_number']
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = user_models.User
-        fields = ['id', 'email', 'password', 'first_name', 'last_name', 'sex', 'role', 'birth_date', 'phone_number']
+        fields = ['username', 'email', 'password', 'first_name', 'last_name', 'sex', 'role', 'birth_date', 'phone_number']
 
 # class UserRegisterSerializer(RegisterSerializer):
 #     role = serializers.CharField(required=False)

@@ -37,7 +37,7 @@ class UserList(generics.ListCreateAPIView):
             return Response(response_data, status=status.HTTP_201_CREATED)
         except Exception as e:
             return Response({
-                "message":e.message,
+                "message":e,
             }, status=status.HTTP_400_BAD_REQUEST)
 
 

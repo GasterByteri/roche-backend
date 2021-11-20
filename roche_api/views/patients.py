@@ -4,6 +4,8 @@ from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, generics
+from rest_framework.authtoken.models import Token
+from roche_api.services.data import users as users_data_service
 
 
 class PatientList(generics.ListCreateAPIView):
@@ -12,6 +14,28 @@ class PatientList(generics.ListCreateAPIView):
 
     queryset = user_models.Patient.objects.all()
     serializer_class = PatientSerializer
+
+    def post(self, request, *args, **kwargs):
+        # try:
+
+        user_data = request.data.pop("user")
+        user = user_models.User.objects.create(**user_data)
+        user.save()
+
+        patient = user_models.Patient.objects.create(user=user, **request.data)
+        patient.save()
+
+        token, created = Token.objects.get_or_create(user=user)
+        response_data = {
+            "id": user.id,
+            "key": token.key
+        }
+
+        return Response(response_data, status=status.HTTP_201_CREATED)
+        # except Exception as e:
+        #     return Response({
+        #         "message":e,
+        #     }, status=status.HTTP_400_BAD_REQUEST)
 
 
 class PatientDetail(generics.RetrieveUpdateDestroyAPIView):
