@@ -11,7 +11,7 @@ from django.contrib.auth import logout
 @permission_classes([AllowAny])
 def user_login(request):
     if request.method == 'POST':
-        username = request.data.get("username")
+        username = request.data.get("email")
         try:
             user = user_models.User.objects.get(username=username)
         except user_models.User.DoesNotExist:
