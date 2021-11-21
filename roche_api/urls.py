@@ -7,12 +7,14 @@ from roche_api.views import journals as journal_views
 from roche_api.views import chat as chat_views
 from roche_api.views import membership as membership_views
 from roche_api.views import authentication as authentication_views
+from roche_api.views import questionaire as questionaire_views
 from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
   path('login/', authentication_views.user_login),
   path('logout/', authentication_views.user_logout),
   path('users/', user_views.UserList.as_view()),
+  path('questionaire/', questionaire_views.get_journal_entry),
   path('users/<int:pk>/', user_views.UserDetail.as_view()),
   path('patients/', patient_views.PatientList.as_view()),
   path('patients/<int:pk>/', patient_views.PatientDetail.as_view()),
