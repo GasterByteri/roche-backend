@@ -35,3 +35,5 @@ six==1.16.0
 sqlparse==0.4.2
 uritemplate==4.1.1
 urllib3==1.26.7
+gspread==4.0.1
+oauth2client==4.1.3
